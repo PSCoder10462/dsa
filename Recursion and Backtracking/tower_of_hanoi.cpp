@@ -25,5 +25,5 @@ vector<vector<int>> towerOfHanoi(int n)
     
     ans.clear();
     toh(n, 1, 2, 3);   
-	return ans;
+    return ans;
 }

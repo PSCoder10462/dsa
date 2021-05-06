@@ -1,3 +1,5 @@
+// v is the global vector to be sorted
+
 std::vector<int> merge(std::vector<int> v1, std::vector<int> v2)
 {
     std::vector<int> ans;

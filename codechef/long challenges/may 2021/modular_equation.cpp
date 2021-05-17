@@ -21,9 +21,8 @@ int32_t main()
 			int a = m % i;
 			ctr += v[a];
 			for (int j = a; j <= n; j += i)
-			{
 				v[j]++;
-			}
+			
 		}
 
 		std::cout << ctr << '\n';

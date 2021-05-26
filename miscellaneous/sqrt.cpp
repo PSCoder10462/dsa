@@ -3,7 +3,7 @@ public:
     
     int mySqrt(int x) {
         
-        long long hi = 46341, lo=0;
+        long long hi = x, lo=0;
         
         if ( x > 0 && x <= 3) return 1;
         

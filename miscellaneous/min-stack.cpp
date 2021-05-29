@@ -1,7 +1,8 @@
 class MinStack {
+private:
+    vector<int> v; int t;
 public:
-    /** initialize your data structure here. */
-    vector<int> v; int t; int minn;
+    /** initialize your data structure here. */ 
     MinStack() {
         t = -1;
     }
@@ -21,7 +22,7 @@ public:
     }
     
     int getMin() {
-         minn = v[0];
+         int minn = v[0];
             for (int x: v) minn = min(minn, x);
          return minn;
     }

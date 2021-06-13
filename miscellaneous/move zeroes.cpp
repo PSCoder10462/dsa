@@ -14,6 +14,5 @@ public:
         }
         
         for (int i = 0; i<v.size(); ++i) nums.push_back(0);
-        
     }
 };

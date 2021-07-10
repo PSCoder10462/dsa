@@ -5,7 +5,7 @@ using namespace std;
 #define int long long
 #define vi vector<int>
 #define vvi vector<vi>
-#define mid(l, h) (l + h / 2)
+#define mid(l, h) ((l + h) / 2)
 #define loop(i, a, b) for (int i = a; i <= b; ++i)
 #define looprev(i, a, b) for (int i = a; i >= b; --i)
 #define mod(a) (a % 100'000'007)
@@ -29,47 +29,23 @@ void solve() {
     return;
   }
 
-  vi pre(n), suf(n), exc(n);
+  vi pgcd(n), sgcd(n), egcd(n);
 
-  // calc pre and suf
+  loop(i, 1, n - 1) pgcd[i] = __gcd(pgcd[i - 1], v[i - 1]);
 
-  loop(i, 1, n - 2) {
-    pre[i] = __gcd(pre[i - 1], v[i - 1]);
-    suf[n - i - 1] = __gcd(suf[n - i], v[n - i]);
-  }
+  looprev(i, n - 2, 0) sgcd[i] = __gcd(sgcd[i + 1], v[i + 1]);
 
-  suf[0] = __gcd(suf[1], v[0]);
-  pre[n - 1] = __gcd(pre[n - 2], v[n - 1]);
-  exc[0] = suf[0];
-  exc[n - 1] = pre[n - 1];
-  loop(i, 1, n - 2) {}
-  int maxx = 0, ind = 0;
+  loop(i, 0, n - 1) egcd[i] = __gcd(sgcd[i], pgcd[i]);
+
+  int sum = accumulate(v.begin(), v.end(), 0);
+
+  int ans = LLONG_MAX;
   loop(i, 0, n - 1) {
-    exc[i] = __gcd(suf[i], pre[i]);
-    if (exc[i] > maxx) {
-      ind = i;
-      maxx = exc[i];
-    } else if (exc[i] == maxx) {
-      if (v[i] > v[ind]) {
-        ind = i;
-      }
-    }
+    int temp = (sum - v[i] + egcd[i]) / egcd[i];
+    if (ans > temp) ans = temp;
   }
-
-  v[ind] = maxx;
-
-  int ans = 0;
-  loop(i, 0, n - 1) ans += v[i] / maxx;
 
   cout << ans << endl;
-
-  // loop(i, 0, n - 1) cout << pre[i] << " ";
-  // cout << endl;
-  // loop(i, 0, n - 1) cout << suf[i] << " ";
-  // cout << endl;
-  // cout << "EXC : " << endl;
-  // loop(i, 0, n - 1) cout << exc[i] << " ";
-  // cout << endl << endl;
 }
 
 int32_t main() {

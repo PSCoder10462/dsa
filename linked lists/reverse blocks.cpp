@@ -41,71 +41,75 @@ void printLL(Node *&head) {
     cout << ptr->data;
     if (ptr->next) cout << "->";
   }
+  cout << endl;
 }
 
 Node *reverseLL(Node *head) {
   if (not head or not head->next) return head;
-
   Node *rest = reverseLL(head->next);
-
   head->next->next = head;
-
   head->next = nullptr;
-
   return rest;
 }
 
 void solve() {
   int n;
-  cin >> n;
-
   Node *head, *last;
-
+  cin >> n;
   head = last = nullptr;
-
   while (n != -1) {
     createNode(head, last, n);
     cin >> n;
   }
-
   cin >> n;
-
   vi b(n);
-
   loop(i, 0, n - 1) cin >> b[i];
 
   printLL(head);
+  for (int i : b) cout << i << " ";
   cout << endl;
 
-  if (not head or not head->next) return;
+  // only head
+  if (!head or !head->next) return;
 
-  Node *ptr = head, *nhead = nullptr;
+  Node *ans, *start, *ptr, *end;
+  ans = last = end = nullptr;
+  ptr = head;
 
-  Node *temp = head, *start = head;
-  loop(i, 0, n - 1) {
-    if (not b[i]) continue;
-    if (not start) break;
-    ptr = start;
-    loop(j, 1, b[i] - 1) {
-      if (not ptr->next) break;
-      ptr = ptr->next;
+  bool check = false;
+
+  loop(k, 0, n - 1) {
+    int i = b[k];
+    if (!start) break;
+    if (!i) continue;
+    check = true;
+    start = ptr;
+    last = start;
+    loop(j, 1, i - 1) {
+      if (!last) break;
+      last = last->next;
     }
-    if (not ptr) break;
-    temp = ptr->next;
-    ptr->next = nullptr;
-    ptr = reverseLL(start);
-    start = temp;
-    if (not nhead) {
-      nhead = ptr;
-      last = nhead;
+    if (last) {
+      ptr = last->next;
+      last->next = nullptr;
     } else
-      last->next = ptr;
-    while (last->next) last = last->next;
+      ptr = nullptr;
+    if (!ans)
+      ans = reverseLL(start);
+    else
+      end->next = reverseLL(start);
+    end = start;
   }
-
-  last->next = start;
-
-  printLL(nhead);
+  if (!check) {
+    printLL(head);
+    return;
+  }
+  while (ptr) {
+    end->next = ptr;
+    ptr = ptr->next;
+    end = end->next;
+  }
+  printLL(ans);
 }
 
 int32_t main() {

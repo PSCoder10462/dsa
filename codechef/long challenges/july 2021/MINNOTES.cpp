@@ -19,32 +19,27 @@ void file_i_o() {
 }
 
 void solve() {
-  int n;
+  int n, sum = 0;
   cin >> n;
   vi v(n);
-  loop(i, 0, n - 1) cin >> v[i];
-
+  for (int &i : v) {
+    cin >> i;
+    sum += i;
+  }
   if (n == 1) {
     cout << 1 << endl;
     return;
   }
-
-  vi pgcd(n), sgcd(n), egcd(n);
-
-  loop(i, 1, n - 1) pgcd[i] = __gcd(pgcd[i - 1], v[i - 1]);
-
-  looprev(i, n - 2, 0) sgcd[i] = __gcd(sgcd[i + 1], v[i + 1]);
-
-  loop(i, 0, n - 1) egcd[i] = __gcd(sgcd[i], pgcd[i]);
-
-  int sum = accumulate(v.begin(), v.end(), 0);
-
-  int ans = LLONG_MAX;
+  vi pre(n), suf(n);
+  pre[0] = v[0];
+  suf[n - 1] = v[n - 1];
+  loop(i, 1, n - 1) pre[i] = __gcd(pre[i - 1], v[i]);
+  looprev(i, n - 2, 0) suf[i] = __gcd(suf[i + 1], v[i]);
+  int ans = sum / pre[n - 1];
   loop(i, 0, n - 1) {
-    int temp = (sum - v[i] + egcd[i]) / egcd[i];
-    if (ans > temp) ans = temp;
+    int k = __gcd((i - 1 < 0 ? 0 : pre[i - 1]), (i + 1 >= n ? 0 : suf[i]));
+    ans = min(ans, 1 + ((sum - v[i]) / k));
   }
-
   cout << ans << endl;
 }
 

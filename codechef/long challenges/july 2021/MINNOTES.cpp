@@ -37,7 +37,7 @@ void solve() {
   looprev(i, n - 2, 0) suf[i] = __gcd(suf[i + 1], v[i]);
   int ans = sum / pre[n - 1];
   loop(i, 0, n - 1) {
-    int k = __gcd((i - 1 < 0 ? 0 : pre[i - 1]), (i + 1 >= n ? 0 : suf[i]));
+    int k = __gcd((i - 1 < 0 ? 0 : pre[i - 1]), (i + 1 >= n ? 0 : suf[i+1]));
     ans = min(ans, 1 + ((sum - v[i]) / k));
   }
   cout << ans << endl;

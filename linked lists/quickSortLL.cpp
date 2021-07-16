@@ -44,34 +44,12 @@ void printLL(Node *head) {
   cout << endl;
 }
 
-Node *mergeLL(Node *f, Node *s) {
-  Node *ans = nullptr, *last = nullptr;
-  while (f and s) {
-    if (f->data <= s->data) {
-      createNode(ans, last, f->data);
-      f = f->next;
-    } else {
-      createNode(ans, last, s->data);
-      s = s->next;
-    }
-  }
-  while (f) {
-    createNode(ans, last, f->data);
-    f = f->next;
-  }
-  while (s) {
-    createNode(ans, last, s->data);
-    s = s->next;
-  }
-  return ans;
-}
-
 Node *qcksrt(Node *head) {
   // base
   if (not head or not head->next) return head;
 
   // divide
-  Node *p, *c, *prev = nullptr;
+  Node *p, *c, *prev = nullptr, *temp = nullptr;
 
   p = c = head;
 
@@ -101,9 +79,12 @@ Node *qcksrt(Node *head) {
     return head;
   }
   // conquer
-  Node *y = qcksrt(head), *z = qcksrt(p);
-
-  return mergeLL(y, z);
+  Node *y = qcksrt(head), *z = qcksrt(p->next);
+  p->next = z;
+  temp = y;
+  while (temp->next) temp = temp->next;
+  temp->next = p;
+  return y;
 }
 
 void solve() {

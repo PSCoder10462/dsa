@@ -31,12 +31,12 @@ int getHeight(TreeNode <int> *root) {
     	lh = getHeight(root->left);
         mp[root->left] = lh;
     } else
-        lh = mp[root];
+        lh = mp[root->left];
     if (!mp[root->right]) {
     	rh = getHeight(root->right);
         mp[root->right] = rh;
     } else
-        lh = mp[root];
+        rh = mp[root->right];
     return 1+std::max(lh, rh);
 }
 

@@ -18,42 +18,22 @@
 
 ************************************************************/
 
-#include <algorithm>
-#include <unordered_map>
+#include <utility>
 
-std::unordered_map <TreeNode<int>*, int> mp;
-
-int getHeight(TreeNode <int> *root) {
-    if (not root) return 0;
-    if (mp[root]) return mp[root];
-    int lh, rh;
-    if (!mp[root->left]) {
-    	lh = getHeight(root->left);
-        mp[root->left] = lh;
-    } else
-        lh = mp[root->left];
-    if (!mp[root->right]) {
-    	rh = getHeight(root->right);
-        mp[root->right] = rh;
-    } else
-        rh = mp[root->right];
-    return 1+std::max(lh, rh);
-}
-
-int f(TreeNode <int> *root) {
-    if (not root) return 0;
-	// Write Your Code Here.
-    int lh = getHeight(root->left);
-    int rh = getHeight(root->right);
-    
-    int rd = lh+rh;
-    int ans = std::max(rd, f(root->left));
-    ans = std::max(ans, f(root->right));
-   	return ans;
+pair<int, int> hd(TreeNode<int> *root) {
+    pair<int, int> ans;
+    ans.first = 0;
+    ans.second = 0;
+    if (not root) return ans;
+    auto tl = hd(root->left), tr = hd(root->right);
+    ans.first = 1+std::max(tl.first, tr.first);
+    ans.second = std::max(tl.second, std::max(tr.second, tl.first+tr.first));
+	return ans;
 }
 
 int diameterOfBinaryTree(TreeNode<int> *root)
 {
-    mp.clear();
-	return f(root);
+	// Write Your Code Here.
+    auto ans = hd(root);
+    return ans.second;
 }

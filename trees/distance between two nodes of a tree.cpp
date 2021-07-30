@@ -18,27 +18,28 @@
 
 ************************************************************/
 
-int lcl, rl, ll;
+TreeNode<int> *findLCA(TreeNode<int> *root, int n1, int n2) {
+    if (!root || root->val == n1 || root->val == n2) 
+        return root;
+	TreeNode <int>* l = findLCA(root->left, n1, n2);
+    TreeNode <int>* r = findLCA(root->right, n1, n2);
+    if (l and r) return root;
+    return l ? l : r;
+}
 
-void f(TreeNode<int> *root, int n1, int n2, int l) {
-    if (not root) return;
-    if (lcl != -1 and rl != -1 and ll != -1) return;
-    if (root->val == n1) 
-        ll = l; 
-    if (root->val == n2) 
-        rl = l;
-    
-    f(root->left, n1, n2, l+1);
-    f(root->right, n1, n2, l+1);
-    
-    if (rl != -1 and ll != -1) 
-        lcl = l;
+int findDistance(TreeNode <int> *node, int d, int level = 0) {
+    if (!node) return -40000;
+    if (node->val == d) return level;
+    int l = findDistance(node->left, d, level+1);
+    if (l>=0) return l;
+    return findDistance(node->right, d, level+1);
 }
 
 int findDistanceBetweenNodes(TreeNode<int> *root, int node1, int node2)
 {
     // Write your code here.
-    lcl = rl = ll = -1;
-    f(root, node1, node2, 0);
-    return lcl == -1 ? -1 : (rl - lcl) + (ll - lcl);
+    TreeNode <int>* lca = findLCA(root, node1, node2);
+    int l = findDistance(lca, node1);
+    int r = findDistance(lca, node2);
+    return l+r >= 0 ? l+r : -1;
 }

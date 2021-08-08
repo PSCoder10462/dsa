@@ -19,14 +19,12 @@ void file_i_o() {
   #endif
 }
 
-v<int> getDigits(ll n) {
-  v<int> ans;
-  unordered_set<int> s;
+int getMaxDigit(ll n) {
+  int ans=0;
   while (n) {
     int t = (int)(n%10);
     n /= 10;
-    if (s.find(t) != s.end()) continue;
-    ans.pb(t); s.insert(t); 
+    if (t > ans) ans = t; 
   } 
   return ans;
 }
@@ -36,13 +34,11 @@ void solve() {
   v<ll> dp(n+1, -1);
   dp[0] = 0;
   loop(i, 1, n) {
-    v<int> d = getDigits(i);
-    for (int j: d) {
-      if (j > i) continue;
-      ll t = 1+dp[i-j];
-      if (!t) continue;
-      dp[i] = (dp[i] == -1) ? t : min(t, dp[i]);
-    }
+    int d = getMaxDigit(i);
+    if (d > i) continue;
+    ll t = 1+dp[i-d];
+    if (!t) continue;
+    dp[i] = (dp[i] == -1) ? t : min(t, dp[i]);
   }
   cout << dp[n];
 }

@@ -1,3 +1,4 @@
+// 1 based indexing/input is used
 /******************************************************/
 #include <bits/stdc++.h>
 using namespace std;

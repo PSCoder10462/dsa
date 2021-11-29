@@ -28,7 +28,7 @@ void file_i_o() {
 }
 
 void solve() {
-    vi f(130, 0);
+    vi f(257, 0);
     string j; cin >> j;
     for (auto c : j) {
         f[c]++;

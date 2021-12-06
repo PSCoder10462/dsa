@@ -22,7 +22,7 @@ void file_i_o() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL); cout.tie(NULL);
 #ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
+    freopen("data.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #endif
 }
@@ -50,12 +50,12 @@ void solve() {
     // string s= "ACGT";
 
 
-    // writing input file
+    // // writing input file
 
     // srand((unsigned int)time(0));
 
-    // loop(i, 1, 20) {
-    //     loop(j, 1, 600) {
+    // loop(i, 1, 5) {
+    //     loop(j, 1, 10) {
     //         cout << s[(int)(4.0* rand())/RAND_MAX];
     //     }
     //     cout << endl;
@@ -73,7 +73,7 @@ void solve() {
     // loop m vector to get parent string
     loop (mss, 0, 19) {
         // start position of parent ss from m
-        loop(startp, 0, 20-len) {
+        loop(startp, 0, 599-len) {
             // ss starting from startp of length len
             string parent = m[mss].substr(startp, len);
             // assuming to print parent
@@ -91,14 +91,14 @@ void solve() {
                 loop(l, min_len, max_len) {
 
                     // start position of child ss
-                    loop(startc, 0, 20-l) {
+                    loop(startc, 0, 599-l) {
 
                     // ss starting from startc of length l
                     string child = m[css].substr(startc, l);
 
                         // found the ss with apt ED
                         if (checkED(parent, child, d, indel, sub)) {
-                            cout << child << '\n';
+                            // cout << child << '\n';
                             flag = true; break;
                         }
                     }
@@ -112,7 +112,7 @@ void solve() {
             }
             // print remains true, ie, all 19 strings had apt ED ss
             if (print) 
-                cout << parent << endl; break;
+                cout << parent << endl; 
         }
     }
 }
@@ -128,3 +128,6 @@ int main () {
 #endif
     return 0;
 }
+
+
+// GAAAGGCTGTCTCAT

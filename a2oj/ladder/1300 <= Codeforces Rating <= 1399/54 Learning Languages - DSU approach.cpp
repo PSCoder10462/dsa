@@ -59,8 +59,10 @@ void solve() {
             int l; cin >> l;
             v[i].insert(l);
             loop(k, 0, i) {
-                if (v[k].find(l) != v[k].end())
+                if (v[k].find(l) != v[k].end()) {
                     Union(arr, size, k, i);
+                    break;
+                }
             }
         }
     }

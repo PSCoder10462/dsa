@@ -28,17 +28,6 @@ void file_i_o() {
 #endif
 }
 
-
-int find_left(vector<pii> &v, int n) {
-    int lo = -1, hi = n+1;
-    while (lo+1 != hi) {
-        int m = mid(lo, hi);
-        if (v[m].ss > v[n].ff) hi = m;
-        else lo = m;
-    }
-    return lo+1;
-}
-
 void solve() {
     int n; cin >> n;
     
